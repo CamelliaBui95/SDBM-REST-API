@@ -39,4 +39,36 @@ public class CouleurResource {
 
         return Response.status(Response.Status.BAD_REQUEST).build();
     }
+
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response update(@PathParam("id") Integer id, Couleur couleur) {
+
+        if(couleur == null || id == null)
+            return Response.status(Response.Status.BAD_REQUEST).build();
+
+        if(id != couleur.getId())
+            return Response.status(Response.Status.CONFLICT).entity(couleur).build();
+
+        if(DAOFactory.getCouleurDAO().update(couleur))
+            return Response.ok(couleur).build();
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id") Integer id) {
+        if(id == null)
+            return Response.status(Response.Status.BAD_REQUEST).build();
+
+        if(DAOFactory.getCouleurDAO().delete(new Couleur(id, "")))
+            return Response.status(204).build();
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
 }
+
+//extract().as(Something.Class)

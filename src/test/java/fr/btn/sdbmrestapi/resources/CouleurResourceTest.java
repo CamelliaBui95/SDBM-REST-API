@@ -12,6 +12,11 @@ class CouleurResourceTest {
 
     @Test
     @Order(1)
+    void insert() {
+
+    }
+
+    @Test
     void getAll() {
     }
 
@@ -19,7 +24,4 @@ class CouleurResourceTest {
     void getById() {
     }
 
-    @Test
-    void insert() {
-    }
 }
