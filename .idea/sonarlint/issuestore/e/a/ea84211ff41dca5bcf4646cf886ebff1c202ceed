@@ -1,0 +1,8 @@
+
+’
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ÑÎëúÿÿÿÿ8Ş½´ˆİ1
+’
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(±ÿ–·øÿÿÿÿ8ß½´ˆİ1
+[
+java:S5993	"9Change the visibility of this constructor to "protected".(ŞØ™¾ûÿÿÿÿ8á½´ˆİ1
+j	java:S119"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(Ëô§³ÿÿÿÿÿ8â½´ˆİ1
