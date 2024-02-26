@@ -8,6 +8,10 @@ public class DAOFactory {
     private static PaysDAO paysDAO;
     private static FabricantDAO fabricantDAO;
     private static MarqueDAO marqueDAO;
+
+    private static ArticleDAO articleDAO;
+
+    private static TypeDAO typeDAO;
     private DAOFactory() {
 
     }
@@ -45,5 +49,19 @@ public class DAOFactory {
             marqueDAO = new MarqueDAO();
 
         return marqueDAO;
+    }
+
+    public static TypeDAO getTypeDAO() {
+        if(typeDAO == null)
+            typeDAO = new TypeDAO();
+
+        return typeDAO;
+    }
+
+    public static ArticleDAO getArticleDAO() {
+        if(articleDAO == null)
+            articleDAO = new ArticleDAO();
+
+        return articleDAO;
     }
 }
