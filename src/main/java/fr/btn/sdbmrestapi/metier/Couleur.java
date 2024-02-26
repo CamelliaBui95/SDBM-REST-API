@@ -4,15 +4,15 @@ import java.util.Objects;
 
 public class Couleur {
     private int id;
-    private String nomCouleur;
+    private String name;
     public Couleur(int id, String nomCouleur) {
         this.id = id;
-        this.nomCouleur = nomCouleur;
+        this.name = nomCouleur;
     }
 
     public Couleur() {
         this.id = 0;
-        this.nomCouleur = "";
+        this.name = "";
     }
 
     public int getId() {
@@ -23,17 +23,17 @@ public class Couleur {
         this.id = id;
     }
 
-    public String getNomCouleur() {
-        return nomCouleur;
+    public String getName() {
+        return name;
     }
 
-    public void setNomCouleur(String nomCouleur) {
-        this.nomCouleur = nomCouleur;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return nomCouleur;
+        return name;
     }
 
     @Override
@@ -41,11 +41,11 @@ public class Couleur {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Couleur couleur = (Couleur) o;
-        return id == couleur.id && Objects.equals(nomCouleur, couleur.nomCouleur);
+        return id == couleur.id && Objects.equals(name, couleur.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nomCouleur);
+        return Objects.hash(id, name);
     }
 }

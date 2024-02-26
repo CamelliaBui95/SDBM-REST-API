@@ -39,7 +39,7 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
 
             while(rs.next()) {
                 couleur.setId(rs.getInt("ID_COULEUR"));
-                couleur.setNomCouleur(rs.getString("NOM_COULEUR"));
+                couleur.setName(rs.getString("NOM_COULEUR"));
             }
             rs.close();
             return couleur;
@@ -51,7 +51,21 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
 
     @Override
     public boolean update(Couleur couleur) {
-        return false;
+        String rq = "UPDATE COULEUR\n" +
+                        "SET NOM_COULEUR = ?" +
+                    "WHERE ID_COULEUR = ?";
+
+        try(PreparedStatement stm = connection.prepareStatement(rq)) {
+            stm.setString(1,couleur.getName());
+            stm.setInt(2, couleur.getId());
+
+            stm.executeUpdate();
+
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -59,7 +73,7 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
         String rq = "INSERT INTO COULEUR (NOM_COULEUR) VALUES (?)";
         try {
             PreparedStatement stm = connection.prepareStatement(rq, Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1, couleur.getNomCouleur());
+            stm.setString(1, couleur.getName());
 
             ResultSet rs = stm.executeQuery();
             while(rs.next())
@@ -68,13 +82,24 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
             rs.close();
             return true;
         } catch (Exception e) {
-
+            e.printStackTrace();
+            return false;
         }
-        return false;
+
     }
 
     @Override
     public boolean delete(Couleur couleur) {
-        return false;
+        String rq = "DELETE FROM COULEUR\n" +
+                    "WHERE ID_COULEUR = ?;";
+
+        try(PreparedStatement stm = connection.prepareStatement(rq)) {
+            stm.setInt(1, couleur.getId());
+            stm.executeUpdate();
+            return true;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

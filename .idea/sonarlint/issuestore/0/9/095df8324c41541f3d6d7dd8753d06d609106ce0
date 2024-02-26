@@ -1,8 +1,7 @@
 
 i
-java:S2095"GUse try-with-resources or close this "Statement" in a "finally" clause.(Í³­×øÿÿÿÿ8ï ‹İ1
+java:S2095"GUse try-with-resources or close this "Statement" in a "finally" clause.(Í³­×øÿÿÿÿ8ÏíÙ³İ1
 l
-java:S2095="OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¤’«8ğ ‹İ1
+java:S2095K"OUse try-with-resources or close this "PreparedStatement" in a "finally" clause.(¤’«8ÏíÙ³İ1
 H
-java:S1168"+Return an empty collection instead of null.(¥¹ï8õ ‹İ1
-E	java:S108F")Either remove or fill this block of code.(”ı¾8çãò‰İ1
+java:S1168"+Return an empty collection instead of null.(¥¹ï8ÙíÙ³İ1

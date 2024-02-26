@@ -23,7 +23,7 @@ public class CouleurResource {
     @Path("{id}")
     public Response getById(@PathParam("id") Integer id) {
         Couleur couleur = DAOFactory.getCouleurDAO().getById(id);
-        if(couleur != null)
+        if(couleur != null && couleur.getId() != 0)
             return Response.ok(couleur).build();
         return Response.noContent().build();
     }
@@ -37,7 +37,7 @@ public class CouleurResource {
         if(DAOFactory.getCouleurDAO().post(couleur))
             return Response.ok(couleur).status(Response.Status.CREATED).build();
 
-        return Response.status(Response.Status.BAD_REQUEST).build();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     @PUT
@@ -49,7 +49,7 @@ public class CouleurResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         if(id != couleur.getId())
-            return Response.status(Response.Status.CONFLICT).entity(couleur).build();
+            return Response.status(Response.Status.CONFLICT).build();
 
         if(DAOFactory.getCouleurDAO().update(couleur))
             return Response.ok(couleur).build();
