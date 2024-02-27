@@ -3,6 +3,8 @@ package fr.btn.sdbmrestapi.resources;
 import fr.btn.sdbmrestapi.dao.DAOFactory;
 import fr.btn.sdbmrestapi.metier.Continent;
 import fr.btn.sdbmrestapi.metier.Pays;
+import fr.btn.sdbmrestapi.security.Tokened;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Path("/pays")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name="Pays")
 public class PaysResource {
     @GET
     public Response getPaysList(@QueryParam("name") String name,
@@ -26,6 +29,7 @@ public class PaysResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response postPays(Pays pays) {
         if(pays == null || pays.getContinent() == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -39,6 +43,7 @@ public class PaysResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Tokened
     public Response updatePays(@PathParam("id") int id, Pays pays) {
         if(id == 0 || pays == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -54,6 +59,7 @@ public class PaysResource {
 
     @DELETE
     @Path("{id}")
+    @Tokened
     public Response deleteById(@PathParam("id") int id){
         if(id == 0)
             return Response.status(Response.Status.BAD_REQUEST).build();

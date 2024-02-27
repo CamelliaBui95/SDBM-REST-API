@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
         MethodOrderer.OrderAnnotation.class
 )
 class PaysResourceTest {
-    private final String ENDPOINT = "/sdbm/api/pays";
-    private Pays testPays = new Pays(0, "TEST PAYS", new Continent(1, ""));
+    private final String ENDPOINT = "/api/pays";
+    private static Pays testPays = new Pays(0, "TEST PAYS", new Continent(1, ""));
     @Test
     @Order(1)
     void getPaysList() {

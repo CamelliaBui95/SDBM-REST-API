@@ -2,8 +2,11 @@ package fr.btn.sdbmrestapi.resources;
 
 import fr.btn.sdbmrestapi.dao.DAOFactory;
 import fr.btn.sdbmrestapi.metier.Type;
+import fr.btn.sdbmrestapi.security.Tokened;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -11,6 +14,7 @@ import java.util.List;
 
 @Path("/types")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name="Type de Bière")
 public class TypeResource {
     @GET
     public Response getAll() {
@@ -29,11 +33,13 @@ public class TypeResource {
         if(type == null || type.getId() == 0)
             return Response.status(Response.Status.NOT_FOUND).build();
 
+
         return Response.ok(type).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response post(Type type) {
         if(type == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -47,6 +53,7 @@ public class TypeResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Tokened
     public Response put(@PathParam("id") int id, Type type) {
         if(id == 0 || type == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -62,6 +69,7 @@ public class TypeResource {
 
     @DELETE
     @Path("{id}")
+    @Tokened
     public Response deleteById(@PathParam("id") int id) {
         if(id == 0)
             return Response.status(Response.Status.BAD_REQUEST).build();

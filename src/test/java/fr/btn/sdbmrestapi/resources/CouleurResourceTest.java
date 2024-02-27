@@ -16,7 +16,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CouleurResourceTest {
-    private final String ENDPOINT = "/sdbm/api/couleurs";
+    private final String ENDPOINT = "/api/couleurs";
+    private String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidHVvbmduZ2hpIiwiaWF0IjoxNzA5MDMzMzgxLCJleHAiOjE3MDkwMzM5ODF9.V45yCql3cezQlcdIfYyBdKokIzKdLLt1iNbetvQul_w";
     private Couleur testCouleur = new Couleur(0, "TEST COULEUR");
     @Test
     @Order(1)
@@ -51,6 +52,7 @@ class CouleurResourceTest {
     @Order(3)
     void insert() {
         Couleur res = given()
+                            .header("Authorization", "Bearer " + token)
                             .contentType("application/json")
                             .body(testCouleur)
                             .when()

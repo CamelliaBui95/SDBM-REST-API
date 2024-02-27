@@ -2,6 +2,8 @@ package fr.btn.sdbmrestapi.resources;
 
 import fr.btn.sdbmrestapi.dao.DAOFactory;
 import fr.btn.sdbmrestapi.metier.Couleur;
+import fr.btn.sdbmrestapi.security.Tokened;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Path("/couleurs")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag( name = "Couleur", description = "CRUD operations for Color table")
 public class CouleurResource {
 
     @GET
@@ -30,6 +33,7 @@ public class CouleurResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response insert(Couleur couleur) {
         if(couleur == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -40,9 +44,11 @@ public class CouleurResource {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
+
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response update(@PathParam("id") Integer id, Couleur couleur) {
 
         if(couleur == null || id == null)
@@ -60,6 +66,7 @@ public class CouleurResource {
     @DELETE
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response deleteById(@PathParam("id") Integer id) {
         if(id == null)
             return Response.status(Response.Status.BAD_REQUEST).build();

@@ -2,7 +2,8 @@ package fr.btn.sdbmrestapi.resources;
 
 import fr.btn.sdbmrestapi.dao.DAOFactory;
 import fr.btn.sdbmrestapi.metier.*;
-import fr.btn.sdbmrestapi.wrapper.ArticleWrapper;
+import fr.btn.sdbmrestapi.dto.ArticleWrapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Path("/articles")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name="Articles", description = "CRUD operations for Article table")
 public class ArticleResource {
     @GET
     public Response getLike(@QueryParam("name") String name,

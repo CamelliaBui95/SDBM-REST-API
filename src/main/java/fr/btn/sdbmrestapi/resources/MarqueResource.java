@@ -5,6 +5,8 @@ import fr.btn.sdbmrestapi.metier.Continent;
 import fr.btn.sdbmrestapi.metier.Fabricant;
 import fr.btn.sdbmrestapi.metier.Marque;
 import fr.btn.sdbmrestapi.metier.Pays;
+import fr.btn.sdbmrestapi.security.Tokened;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @Path("/marques")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name="Marque")
 public class MarqueResource {
     @GET
     public Response getAll(@QueryParam("name") String name,
@@ -32,6 +35,7 @@ public class MarqueResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response post(Marque marque) {
         if(marque == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -45,6 +49,7 @@ public class MarqueResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Tokened
     public Response put(@PathParam("id") Integer id, Marque marque) {
         if(id == null || id == 0 || marque == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -60,6 +65,7 @@ public class MarqueResource {
 
     @DELETE
     @Path("{id}")
+    @Tokened
     public Response deleteById(@PathParam("id") Integer id) {
         if(id == null || id == 0)
             return Response.status(Response.Status.BAD_REQUEST).build();

@@ -12,7 +12,7 @@ class ContinentResourceTest {
     void getAll() {
         given()
                 .when()
-                .get("/sdbm/api/continents")
+                .get("/api/continents")
                 .then()
                 .contentType("application/json")
                 .statusCode(200)

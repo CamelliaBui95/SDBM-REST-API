@@ -1,6 +1,7 @@
 package fr.btn.sdbmrestapi.dao;
 
 import fr.btn.sdbmrestapi.metier.Marque;
+import fr.btn.sdbmrestapi.security.User;
 
 public class DAOFactory {
     private static CouleurDAO couleurDAO;
@@ -8,8 +9,9 @@ public class DAOFactory {
     private static PaysDAO paysDAO;
     private static FabricantDAO fabricantDAO;
     private static MarqueDAO marqueDAO;
-
     private static ArticleDAO articleDAO;
+
+    private static UserDAO userDAO;
 
     private static TypeDAO typeDAO;
     private DAOFactory() {
@@ -63,5 +65,12 @@ public class DAOFactory {
             articleDAO = new ArticleDAO();
 
         return articleDAO;
+    }
+
+    public static UserDAO getUserDAO() {
+        if(userDAO == null)
+            userDAO = new UserDAO();
+
+        return userDAO;
     }
 }

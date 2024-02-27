@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FabricantResourceTest {
-    private final String ENDPOINT = "/sdbm/api/fabricants";
-    private Fabricant testFabricant = new Fabricant(0, "TEST FABRICANT");
+    private final String ENDPOINT = "/api/fabricants";
+    private static Fabricant testFabricant = new Fabricant(0, "TEST FABRICANT");
     @Test
     @Order(2)
     void getAll() {

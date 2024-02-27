@@ -2,6 +2,8 @@ package fr.btn.sdbmrestapi.resources;
 
 import fr.btn.sdbmrestapi.dao.DAOFactory;
 import fr.btn.sdbmrestapi.metier.Fabricant;
+import fr.btn.sdbmrestapi.security.Tokened;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.GenericEntity;
 import jakarta.ws.rs.core.MediaType;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Path("/fabricants")
 @Produces(MediaType.APPLICATION_JSON)
+@Tag(name="Fabricant")
 public class FabricantResource {
     @GET
     public Response getAll() {
@@ -33,6 +36,7 @@ public class FabricantResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Tokened
     public Response post(Fabricant fabricant) {
         if(fabricant == null || fabricant.getName().isEmpty())
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -46,6 +50,7 @@ public class FabricantResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Tokened
     public Response put(@PathParam("id") Integer id, Fabricant fabricant) {
         if(id == null || id == 0)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -61,6 +66,7 @@ public class FabricantResource {
 
     @DELETE
     @Path("{id}")
+    @Tokened
     public Response delete(@PathParam("id") Integer id) {
         if(id == null || id == 0)
             return Response.status(Response.Status.BAD_REQUEST).build();

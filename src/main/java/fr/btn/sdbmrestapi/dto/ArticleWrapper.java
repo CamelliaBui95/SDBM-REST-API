@@ -1,4 +1,4 @@
-package fr.btn.sdbmrestapi.wrapper;
+package fr.btn.sdbmrestapi.dto;
 
 import fr.btn.sdbmrestapi.metier.Article;
 import lombok.AllArgsConstructor;
