@@ -3,6 +3,7 @@ package fr.btn.sdbmrestapi.resources;
 import fr.btn.sdbmrestapi.metier.Continent;
 import fr.btn.sdbmrestapi.metier.Pays;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpPost;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
         MethodOrderer.OrderAnnotation.class
 )
 class PaysResourceTest {
-    private final String ENDPOINT = "/api/pays";
+    private static final String ENDPOINT = "/api/pays";
     private static Pays testPays = new Pays(0, "TEST PAYS", new Continent(1, ""));
+    private static String token;
+
     @Test
     @Order(1)
     void getPaysList() {
@@ -51,14 +54,26 @@ class PaysResourceTest {
     @Test
     @Order(2)
     void postPays() {
+        String newToken = given()
+                        .contentType("application/json")
+                        .body(TestUtils.getUser())
+                        .when()
+                        .post("/api/auth/login")
+                        .then()
+                        .statusCode(200)
+                        .extract().response().header("Authorization");
+
+        token = newToken;
+
         Pays result = given()
                 .contentType("application/json")
+                .header("Authorization", token)
                 .body(testPays)
                 .when()
                 .post(ENDPOINT)
                 .then()
-                .contentType("application/json")
                 .statusCode(HttpStatus.SC_CREATED)
+                .contentType("application/json")
                 .extract()
                 .response()
                 .body().as(Pays.class);
@@ -76,6 +91,7 @@ class PaysResourceTest {
 
         Pays result = given()
                 .contentType("application/json")
+                .header("Authorization", token)
                 .body(testPays)
                 .when()
                 .put(ENDPOINT + "/" + testPays.getId())
@@ -90,9 +106,9 @@ class PaysResourceTest {
     @Test
     @Order(5)
     void deleteById() {
-        System.out.println(testPays.getId());
         given()
                 .when()
+                .header("Authorization", token)
                 .delete(ENDPOINT + "/" + testPays.getId())
                 .then()
                 .statusCode(HttpStatus.SC_NO_CONTENT);

@@ -1,13 +1,12 @@
 package fr.btn.sdbmrestapi.resources;
 
 import fr.btn.sdbmrestapi.dao.DAOFactory;
+import fr.btn.sdbmrestapi.dto.CouleurDto;
 import fr.btn.sdbmrestapi.metier.Couleur;
 import fr.btn.sdbmrestapi.security.Tokened;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.GenericEntity;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.*;
 
 import java.util.List;
 
@@ -15,11 +14,13 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Tag( name = "Couleur", description = "CRUD operations for Color table")
 public class CouleurResource {
+    @Context
+    UriInfo request;
 
     @GET
     public Response getAll() {
-        List<Couleur> couleurs = DAOFactory.getCouleurDAO().getAll();
-        return Response.ok(new GenericEntity<List<Couleur>>(couleurs) {}).build();
+        List<CouleurDto> couleurs = CouleurDto.getDtoList(DAOFactory.getCouleurDAO().getAll(), UriBuilder.fromUri(request.getBaseUri()));
+        return Response.ok(new GenericEntity<List<CouleurDto>>(couleurs) {}).build();
     }
 
     @GET
@@ -27,7 +28,7 @@ public class CouleurResource {
     public Response getById(@PathParam("id") Integer id) {
         Couleur couleur = DAOFactory.getCouleurDAO().getById(id);
         if(couleur != null && couleur.getId() != 0)
-            return Response.ok(couleur).build();
+            return Response.ok(new CouleurDto(couleur, UriBuilder.fromUri(request.getBaseUri()))).build();
         return Response.noContent().build();
     }
 
@@ -39,7 +40,7 @@ public class CouleurResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         if(DAOFactory.getCouleurDAO().post(couleur))
-            return Response.ok(couleur).status(Response.Status.CREATED).build();
+            return Response.ok(new CouleurDto(couleur, UriBuilder.fromUri(request.getBaseUri()))).status(Response.Status.CREATED).build();
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
@@ -50,7 +51,6 @@ public class CouleurResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Tokened
     public Response update(@PathParam("id") Integer id, Couleur couleur) {
-
         if(couleur == null || id == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
 
@@ -58,7 +58,7 @@ public class CouleurResource {
             return Response.status(Response.Status.CONFLICT).build();
 
         if(DAOFactory.getCouleurDAO().update(couleur))
-            return Response.ok(couleur).build();
+            return Response.ok(new CouleurDto(couleur, UriBuilder.fromUri(request.getBaseUri()))).build();
 
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }

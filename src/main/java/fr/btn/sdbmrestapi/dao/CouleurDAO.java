@@ -11,12 +11,14 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
     @Override
     public ArrayList<Couleur> getAll() {
         ArrayList<Couleur> couleurs = new ArrayList<>();
-        String request = "SELECT * FROM COULEUR";
-        try {
-            Statement stm = this.connection.createStatement();
+        String request = "SELECT ID_COULEUR,\n" +
+                "\t\tNOM_COULEUR,\n" +
+                "\t\tNBreArticles = (SELECT COUNT(*) FROM ARTICLE WHERE C.ID_COULEUR = ID_COULEUR)\n" +
+                "FROM COULEUR C";
+        try(Statement stm = this.connection.createStatement()) {
             ResultSet rs = stm.executeQuery(request);
             while(rs.next())
-                couleurs.add(new Couleur(rs.getInt(1), rs.getString(2)));
+                couleurs.add(new Couleur(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             rs.close();
         } catch(Exception e) {
             e.printStackTrace();
@@ -31,7 +33,11 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
 
     @Override
     public Couleur getById(int id) {
-        String rq = "SELECT * FROM COULEUR WHERE ID_COULEUR = ?";
+        String rq = "SELECT ID_COULEUR,\n" +
+                "\t\tNOM_COULEUR,\n" +
+                "\t\tNBreArticles = (SELECT COUNT(*) FROM ARTICLE WHERE C.ID_COULEUR = ID_COULEUR)\n" +
+                "FROM COULEUR C\n" +
+                "WHERE ID_COULEUR = ?;";
         try(PreparedStatement stm = connection.prepareStatement(rq)) {
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -40,6 +46,7 @@ public class CouleurDAO extends DAO<Couleur, Couleur>{
             while(rs.next()) {
                 couleur.setId(rs.getInt("ID_COULEUR"));
                 couleur.setName(rs.getString("NOM_COULEUR"));
+                couleur.setNbArticles(rs.getInt("NBreArticles"));
             }
             rs.close();
             return couleur;

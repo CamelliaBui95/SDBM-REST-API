@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,18 @@ public class HateOs {
         if(links == null)
             links = new ArrayList<>();
         links.add(link);
+    }
+
+    public void addLink(String name, String method, URI uri) {
+        if(links == null)
+            links = new ArrayList<>();
+        links.add(new Link(name, method, uri));
+    }
+
+    public void addLink(String name, String method, URI uri, Object parametre) {
+        if(links == null)
+            links = new ArrayList<>();
+        links.add(new Link(name, method, uri, parametre));
     }
 
 }
